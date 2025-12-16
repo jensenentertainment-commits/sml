@@ -5,11 +5,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Opplysningskontoret for Opplysningskontor (OFOKO)",
-    template: "%s – OFOKO",
+    default: "Senter for Midlertidige Løsninger",
+    template: "%s – SML",
   },
   description:
-    "Offisiell informasjon om opplysningskontor og opplysningskontorenes opplysningsarbeid.",
+    "Midlertidig etablert · Videreført ved behov",
 };
 
 export const viewport: Viewport = {

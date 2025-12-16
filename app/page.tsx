@@ -2,72 +2,66 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "OFOKO – Opplysningskontoret for Opplysningskontor",
+  title: "SML – Senter for Midlertidige Løsninger",
   description:
-    "Offisiell informasjon om opplysningskontor og opplysningskontorenes opplysningsarbeid.",
+    "Senter for Midlertidige Løsninger (SML) dokumenterer, systematiserer og synliggjør løsninger som opprinnelig var ment å være midlertidige.",
   openGraph: {
-    title: "OFOKO – Opplysningskontoret for Opplysningskontor",
+    title: "SML – Senter for Midlertidige Løsninger",
     description:
-      "Offisiell informasjon om opplysningskontor og opplysningskontorenes opplysningsarbeid.",
+      "Senter for Midlertidige Løsninger (SML) dokumenterer, systematiserer og synliggjør løsninger som opprinnelig var ment å være midlertidige.",
     locale: "nb_NO",
     type: "website",
   },
 };
 
-function Badge({ children }: { children: React.ReactNode }) {
+const THEME = {
+  ink: "#1F2A37",
+  slate: "#475569",
+  line: "rgba(15, 23, 42, 0.10)",
+  bg: "#F6F5F1", // varm off-white / beige-ish
+  panel: "#FFFFFF",
+  muted: "#F3F4F6",
+};
+
+function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-[#1F3A5F]/20 bg-white px-2.5 py-1 text-xs font-semibold text-[#1F3A5F]">
+    <span
+      className="inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold"
+      style={{ borderColor: THEME.line, color: THEME.slate, background: THEME.panel }}
+    >
       {children}
     </span>
   );
 }
 
-
-function SectionTitle({
-  id,
-  title,
-  subtitle,
-}: {
-  id: string;
-  title: string;
-  subtitle?: string;
-}) {
-  return (
-    <div className="space-y-1">
-      <h2 id={id} className="text-base font-semibold tracking-tight text-[#1F3A5F]">
-
-      </h2>
-      {subtitle ? (
-        <p className="text-sm text-black/60">{subtitle}</p>
-      ) : null}
-    </div>
-  );
-}
-
 function Card({
+  title,
   children,
-  className = "",
+  id,
 }: {
+  title: string;
+  id?: string;
   children: React.ReactNode;
-  className?: string;
 }) {
   return (
-    <div
-      className={[
-        "rounded-2xl border border-black/10 bg-white p-6 shadow-sm",
-        className,
-      ].join(" ")}
+    <section
+      id={id}
+      className="rounded-2xl border bg-white p-6 shadow-sm"
+      style={{ borderColor: THEME.line, background: THEME.panel }}
     >
-      {children}
-    </div>
+      <h2 className="text-sm font-semibold tracking-tight" style={{ color: THEME.ink }}>
+        {title}
+      </h2>
+      <div className="mt-3 text-sm leading-7 text-black/75">{children}</div>
+    </section>
   );
 }
 
-function LinkPill({ href, children }: { href: string; children: string }) {
+function NavLink({ href, children }: { href: string; children: string }) {
   return (
     <a
       href={href}
-      className="inline-flex items-center rounded-full border border-black/10 bg-white px-3 py-1.5 text-sm font-semibold text-black/70 hover:bg-zinc-50"
+      className="block rounded-xl px-3 py-2 text-sm font-semibold text-black/70 hover:bg-black/5"
     >
       {children}
     </a>
@@ -76,314 +70,244 @@ function LinkPill({ href, children }: { href: string; children: string }) {
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-zinc-50 text-black">
-      {/* Topbar */}
-      <header className="sticky top-0 z-10 border-b border-black/10 bg-white/80 backdrop-blur">
+    <main className="min-h-screen" style={{ background: THEME.bg, color: THEME.ink }}>
+      {/* Top bar */}
+      <header className="border-b" style={{ borderColor: THEME.line, background: THEME.panel }}>
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="grid h-9 w-9 place-items-center rounded-xl border border-black/10 bg-zinc-50">
-              <span className="text-xs font-bold tracking-tight text-black/70">
-                OF
+            <div
+              className="grid h-9 w-9 place-items-center rounded-xl border"
+              style={{ borderColor: THEME.line, background: THEME.muted }}
+            >
+              <span className="text-xs font-bold tracking-tight" style={{ color: THEME.ink }}>
+                SML
               </span>
             </div>
+
             <div className="leading-tight">
-              <div className="text-sm font-semibold tracking-tight">
-                Opplysningskontoret for Opplysningskontor
+              <div className="text-sm font-semibold tracking-tight" style={{ color: THEME.ink }}>
+                Senter for Midlertidige Løsninger
               </div>
-              <div className="text-xs text-black/55">OFOKO</div>
+              <div className="text-xs" style={{ color: THEME.slate }}>
+                Midlertidig etablert · Videreført ved behov
+              </div>
             </div>
           </div>
 
-          <nav className="hidden items-center gap-2 sm:flex">
-            <LinkPill href="#om">Om</LinkPill>
-            <LinkPill href="#ansvar">Ansvar</LinkPill>
-            <LinkPill href="#organisering">Organisering</LinkPill>
-            <LinkPill href="#faq">Spørsmål</LinkPill>
-          </nav>
-
           <div className="flex items-center gap-2">
-            <Badge>Informasjon</Badge>
-            <Badge>Oppdatert ved behov</Badge>
+            <Chip>Status: I drift</Chip>
+            <Chip>Varighet: Uavklart</Chip>
           </div>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="mx-auto max-w-6xl px-6 pb-8 pt-10">
-        <div className="rounded-3xl border border-[#1F3A5F]/10 bg-[#E8EEF5] p-8 shadow-sm">
-
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge>OFOKO</Badge>
-            <Badge>OFOKOLF</Badge>
-            <Badge>Avdeling Øst (koord.)</Badge>
+      {/* Layout */}
+      <div className="mx-auto grid max-w-6xl gap-6 px-6 py-8 lg:grid-cols-4">
+        {/* Left nav */}
+        <aside
+          className="h-fit rounded-2xl border p-4 shadow-sm"
+          style={{ borderColor: THEME.line, background: THEME.panel }}
+        >
+          <div className="px-3 pb-2 text-xs font-semibold" style={{ color: THEME.slate }}>
+            Innhold
           </div>
+          <nav className="space-y-1">
+            <NavLink href="#oversikt">Oversikt</NavLink>
+            <NavLink href="#mandat">Mandat</NavLink>
+            <NavLink href="#kriterier">Kriterier</NavLink>
+            <NavLink href="#kategorier">Kategorier</NavLink>
+            <NavLink href="#faq">Spørsmål</NavLink>
+            <NavLink href="#publikasjoner">Publikasjoner</NavLink>
+          </nav>
 
-          <h1 className="mt-4 text-3xl font-semibold tracking-tight">
-            Strukturert informasjon om opplysningskontor i Norge
-          </h1>
-
-          <p className="mt-3 max-w-3xl text-base leading-7 text-black/75">
-            OFOKO arbeider for å styrke kunnskapsgrunnlaget knyttet til
-            opplysningskontorenes rolle, mandat og opplysningsarbeid.
-          </p>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <div className="rounded-2xl border border-black/10 bg-zinc-50 p-5">
-              <div className="text-xs font-semibold text-black/60">
-                Virkeområde
-              </div>
-              <div className="mt-1 text-sm text-black/75">
-                Opplysningskontor (generelt)
-              </div>
+          <div
+            className="mt-4 rounded-xl border p-3 text-xs"
+            style={{ borderColor: THEME.line, background: THEME.muted }}
+          >
+            <div className="font-semibold" style={{ color: THEME.ink }}>
+              Merknad
             </div>
-
-            <div className="rounded-2xl border border-black/10 bg-zinc-50 p-5">
-              <div className="text-xs font-semibold text-black/60">Status</div>
-              <div className="mt-1 text-sm text-black/75">
-                Prioriteres etter kapasitet
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-black/10 bg-zinc-50 p-5">
-              <div className="text-xs font-semibold text-black/60">
-                Publikasjoner
-              </div>
-              <div className="mt-1 text-sm text-black/75">
-                Tilgjengeliggjøres når de foreligger
-              </div>
+            <div className="mt-1 leading-5 text-black/60">
+              Midlertidige løsninger kan vedvare i påvente av permanent løsning.
             </div>
           </div>
-        </div>
-      </section>
+        </aside>
 
-      {/* Content */}
-      <section className="mx-auto max-w-6xl px-6 pb-14">
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Main */}
-          <div className="space-y-6 lg:col-span-2">
-            <Card>
-              <SectionTitle
-                id="om"
-                title="Om OFOKO"
-                subtitle="Formål, avgrensning og prinsipper"
-              />
-              <div className="mt-4 space-y-3 text-sm leading-7 text-black/75">
-                <p>
-                  Opplysningskontoret for Opplysningskontor (OFOKO) arbeider for
-                  å bidra til et mer opplyst samfunn gjennom strukturert
-                  informasjon om aktører som har til oppgave å opplyse.
-                </p>
-                <p>
-                  Arbeidet gjennomføres innenfor et nøkternt rammeverk, med vekt
-                  på begrepsavklaring, oversikt og tilgjengeliggjøring av
-                  relevant informasjon.
-                </p>
-              </div>
-            </Card>
-
-            <Card>
-              <SectionTitle
-                id="ansvar"
-                title="Ansvarsområder"
-                subtitle="Kjerneområder for OFOKOs opplysningsarbeid"
-              />
-              <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl border border-black/10 bg-white p-5">
-                  <h3 className="text-sm font-semibold tracking-tight">
-                    Kartlegging
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-black/75">
-                    Kartlegging av opplysningskontorenes kartlegginger, herunder
-                    formål, omfang og offentlig tilgjengelighet.
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-black/10 bg-white p-5">
-                  <h3 className="text-sm font-semibold tracking-tight">
-                    Begrepsavklaring
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-black/75">
-                    Avklaringer rundt begreper, roller og strukturer knyttet til
-                    opplysningsarbeid.
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-black/10 bg-white p-5">
-                  <h3 className="text-sm font-semibold tracking-tight">
-                    Kunnskapsgrunnlag
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-black/75">
-                    Samling, strukturering og formidling av relevant
-                    informasjon på et samlet sted.
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-black/10 bg-white p-5">
-                  <h3 className="text-sm font-semibold tracking-tight">
-                    Opplysning
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-black/75">
-                    Opplysning om opplysningsarbeid, inkludert kampanjer,
-                    informasjonsmateriell og tilgrensende tiltak.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-5 rounded-2xl border border-black/10 bg-zinc-50 p-4 text-sm text-black/70">
-                Arbeidet prioriteres i tråd med kapasitet og løpende vurderinger.
-              </div>
-            </Card>
-
-            <Card>
-              <SectionTitle
-                id="organisering"
-                title="Organisering"
-                subtitle="Landsdekkende samarbeid og regionale avdelinger"
-              />
-              <div className="mt-4 space-y-3 text-sm leading-7 text-black/75">
-                <p>
-                  OFOKO inngår i et landsdekkende samarbeid gjennom{" "}
-                  <strong>
-                    Opplysningskontoret for Opplysningskontors Landsforbund
-                    (OFOKOLF)
-                  </strong>
-                  .
-                </p>
-                <p>
-                  Landsforbundet er organisert med regionale avdelinger for å
-                  ivareta geografisk forankring og koordinering.
-                </p>
-
-                <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                  {[
-                    "Avdeling Øst",
-                    "Avdeling Sør",
-                    "Avdeling Vest",
-                    "Avdeling Midt",
-                    "Avdeling Nord",
-                  ].map((x) => (
-                    <li
-                      key={x}
-                      className="rounded-2xl border border-black/10 bg-white p-3 text-sm text-black/75"
-                    >
-                      {x}
-                    </li>
-                  ))}
-                </ul>
-
-                <p className="text-black/60">
-                  Enkelte avdelinger er under etablering.
-                </p>
-                <p className="text-black/60">
-                  Avdeling Øst fungerer per i dag som koordinerende avdeling.
-                </p>
-              </div>
-            </Card>
-          </div>
-
-          {/* Side panel */}
-          <aside className="space-y-6">
-            <Card className="p-6">
-              <SectionTitle
-                id="faq"
-                title="Ofte stilte spørsmål"
-                subtitle="Kortfattede avklaringer"
-              />
-              <div className="mt-4 space-y-3">
-                <details className="rounded-2xl border border-black/10 bg-white p-4">
-                  <summary className="cursor-pointer list-none text-sm font-semibold">
-                    Finnes OFOKO?
-                  </summary>
-                  <p className="mt-2 text-sm leading-6 text-black/75">
-                    OFOKO eksisterer som informasjonsaktør. Nærmere avklaringer
-                    rundt organisatorisk plassering vurderes fortløpende.
-                  </p>
-                </details>
-
-                <details className="rounded-2xl border border-black/10 bg-white p-4">
-                  <summary className="cursor-pointer list-none text-sm font-semibold">
-                    Hvem finansierer virksomheten?
-                  </summary>
-                  <p className="mt-2 text-sm leading-6 text-black/75">
-                    Finansiering omtales samlet når grunnlaget foreligger.
-                  </p>
-                </details>
-
-                <details className="rounded-2xl border border-black/10 bg-white p-4">
-                  <summary className="cursor-pointer list-none text-sm font-semibold">
-                    Har dere kontaktinformasjon?
-                  </summary>
-                  <p className="mt-2 text-sm leading-6 text-black/75">
-                    Kontaktkanaler vurderes etablert når behovet er
-                    tilstrekkelig dokumentert.
-                  </p>
-                </details>
-              </div>
-            </Card>
-
-            <Card>
-              <SectionTitle
-                id="dokumenter"
-                title="Dokumenter og publikasjoner"
-                subtitle="Tilgjengeliggjøres når de foreligger"
-              />
-              <ul className="mt-4 space-y-2">
-                <li className="rounded-2xl border border-black/10 bg-white p-4">
-                  <div className="text-xs font-semibold text-black/60">
-                    Notat 01/OFOKO
-                  </div>
-                  <div className="mt-1 text-sm text-black/75">
-                    Begrepsavklaringer og avgrensninger (under utarbeidelse)
-                  </div>
-                </li>
-
-                <li className="rounded-2xl border border-black/10 bg-white p-4">
-                  <div className="text-xs font-semibold text-black/60">
-                    Notat 02/OFOKO
-                  </div>
-                  <div className="mt-1 text-sm text-black/75">
-                    Oversikt over opplysningskontor (foreløpig status)
-                  </div>
-                </li>
-                <li className="rounded-2xl border border-black/10 bg-white p-4">
-  <div className="text-xs font-semibold text-black/60">
-    Notat 03/OFOKO
-  </div>
-  <div className="mt-1 text-sm text-black/75">
-    Opplysningskontorenes rolle i opplysningsarbeidet
-  </div>
-  <a
-    href="/notat-03"
-    className="mt-2 inline-block text-xs font-semibold text-[#1F3A5F] underline underline-offset-4"
-  >
-    Åpne dokument
-  </a>
-</li>
-
-              </ul>
-              <p className="mt-3 text-xs text-black/55">
-                Dokumenter publiseres ved behov og etter kapasitet.
-              </p>
-            </Card>
-
-            <div className="rounded-2xl border border-[#5E7F6A]/30 bg-[#F3F7F5] p-5 text-xs text-black/65">
-
-              <div className="font-semibold text-black/60">Merknad</div>
-              <p className="mt-2 leading-6">
-                Innhold oppdateres ved behov. Endringer i struktur og
-                avgrensninger vurderes fortløpende.
-              </p>
+        {/* Main */}
+        <div className="space-y-6 lg:col-span-3">
+          {/* Overview / hero-ish */}
+          <section
+            id="oversikt"
+            className="rounded-2xl border p-7 shadow-sm"
+            style={{ borderColor: THEME.line, background: THEME.panel }}
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              <Chip>SML</Chip>
+              <Chip>Etablert: Midlertidig</Chip>
+              <Chip>Omfang: Løpende</Chip>
             </div>
-          </aside>
-        </div>
 
-        <footer className="mt-10 border-t border-black/10 pt-6 text-xs text-black/55">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <p>
-              © {new Date().getFullYear()} Opplysningskontoret for
-              Opplysningskontors Opplysningskontor (OFOKO)
+            <h1 className="mt-4 text-2xl font-semibold tracking-tight" style={{ color: THEME.ink }}>
+              Systematisering av midlertidighet
+            </h1>
+
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-black/75">
+              Senter for Midlertidige Løsninger (SML) arbeider for å dokumentere, systematisere og
+              synliggjøre løsninger som opprinnelig var ment å være midlertidige.
             </p>
-            <p>Utarbeidet i et nøkternt og opplysende format.</p>
-          </div>
-        </footer>
-      </section>
+
+            <div className="mt-5 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-xl border p-4" style={{ borderColor: THEME.line }}>
+                <div className="text-xs font-semibold" style={{ color: THEME.slate }}>
+                  Status
+                </div>
+                <div className="mt-1 text-sm text-black/75">I drift</div>
+              </div>
+              <div className="rounded-xl border p-4" style={{ borderColor: THEME.line }}>
+                <div className="text-xs font-semibold" style={{ color: THEME.slate }}>
+                  Etablert
+                </div>
+                <div className="mt-1 text-sm text-black/75">Ved behov</div>
+              </div>
+              <div className="rounded-xl border p-4" style={{ borderColor: THEME.line }}>
+                <div className="text-xs font-semibold" style={{ color: THEME.slate }}>
+                  Avslutning
+                </div>
+                <div className="mt-1 text-sm text-black/75">Vurderes fortløpende</div>
+              </div>
+            </div>
+          </section>
+
+          <Card id="mandat" title="Mandat">
+            <p>
+              SML skal bidra til en mer strukturert forståelse av midlertidige løsninger som fenomen,
+              herunder årsaker til etablering, varighet og videreføring over tid.
+            </p>
+            <p className="mt-3">
+              Innhold utarbeides i et nøkternt format og tar utgangspunkt i generelle beskrivelser,
+              ikke enkeltsaker.
+            </p>
+          </Card>
+
+          <Card id="kriterier" title="Kriterier">
+            <p>En løsning kan anses som midlertidig når den:</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              <li>er etablert som en forbigående ordning eller tiltak</li>
+              <li>videreføres i påvente av avklaring eller permanent løsning</li>
+              <li>oppnår funksjonell stabilitet uten formalisert sluttdato</li>
+              <li>omtales som midlertidig over tid</li>
+            </ul>
+            <div
+              className="mt-4 rounded-xl border p-4 text-sm"
+              style={{ borderColor: THEME.line, background: THEME.muted }}
+            >
+              Presisering: Kriteriene er veiledende og kan anvendes samlet eller delvis.
+            </div>
+          </Card>
+
+          <Card id="kategorier" title="Kategorier (foreløpig)">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                ["Midlertidige ordninger", "Ordninger etablert for å dekke et avgrenset behov."],
+                ["Midlertidige systemer", "Tekniske løsninger etablert som interimtiltak."],
+                ["Midlertidige rutiner", "Praksiser etablert for å sikre drift i overgangsperioder."],
+                ["Midlertidige tiltak", "Tiltak innført som respons på situasjoner og endringer."],
+              ].map(([t, d]) => (
+                <div key={t} className="rounded-xl border bg-white p-5" style={{ borderColor: THEME.line }}>
+                  <div className="text-xs font-semibold" style={{ color: THEME.slate }}>
+                    Kategori
+                  </div>
+                  <div className="mt-1 text-sm font-semibold" style={{ color: THEME.ink }}>
+                    {t}
+                  </div>
+                  <div className="mt-2 text-sm leading-6 text-black/75">{d}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card id="faq" title="Ofte stilte spørsmål">
+            <div className="space-y-3">
+              <details className="rounded-xl border bg-white p-4" style={{ borderColor: THEME.line }}>
+                <summary className="cursor-pointer list-none text-sm font-semibold" style={{ color: THEME.ink }}>
+                  Når avsluttes en midlertidig løsning?
+                </summary>
+                <p className="mt-2 text-sm leading-6 text-black/75">
+                  Når den erstattes av permanent løsning eller avvikles.
+                </p>
+              </details>
+
+              <details className="rounded-xl border bg-white p-4" style={{ borderColor: THEME.line }}>
+                <summary className="cursor-pointer list-none text-sm font-semibold" style={{ color: THEME.ink }}>
+                  Når erstattes den?
+                </summary>
+                <p className="mt-2 text-sm leading-6 text-black/75">
+                  Det vurderes fortløpende.
+                </p>
+              </details>
+
+              <details className="rounded-xl border bg-white p-4" style={{ borderColor: THEME.line }}>
+                <summary className="cursor-pointer list-none text-sm font-semibold" style={{ color: THEME.ink }}>
+                  Har dere kontaktinformasjon?
+                </summary>
+                <p className="mt-2 text-sm leading-6 text-black/75">
+                  Kontaktkanaler vurderes etablert ved behov.
+                </p>
+              </details>
+            </div>
+          </Card>
+
+          <Card id="publikasjoner" title="Publikasjoner">
+            <ul className="space-y-2">
+              <li className="rounded-xl border bg-white p-4" style={{ borderColor: THEME.line }}>
+                <div className="text-xs font-semibold" style={{ color: THEME.slate }}>
+                  Notat 01/SML
+                </div>
+                <div className="mt-1 text-sm text-black/75">
+                  Definisjoner og avgrensninger (under utarbeidelse)
+                </div>
+              </li>
+
+              <li className="rounded-xl border bg-white p-4" style={{ borderColor: THEME.line }}>
+                <div className="text-xs font-semibold" style={{ color: THEME.slate }}>
+                  Notat 02/SML
+                </div>
+                <div className="mt-1 text-sm text-black/75">
+                  Klassifisering av midlertidige løsninger (foreløpig status)
+                </div>
+              </li>
+
+              {/* Én død lenke (valgfritt, men riktig) */}
+              <li className="rounded-xl border bg-white p-4" style={{ borderColor: THEME.line }}>
+                <div className="text-xs font-semibold" style={{ color: THEME.slate }}>
+                  Notat 03/SML
+                </div>
+                <div className="mt-1 text-sm text-black/75">
+                  Overgangsordninger med uklar sluttdato
+                </div>
+                <a
+                  href="/notat-03"
+                  className="mt-2 inline-block text-xs font-semibold underline underline-offset-4"
+                  style={{ color: THEME.ink }}
+                >
+                  Åpne dokument
+                </a>
+              </li>
+            </ul>
+
+            <p className="mt-3 text-xs text-black/55">
+              Publikasjoner tilgjengeliggjøres når de foreligger.
+            </p>
+          </Card>
+
+          <footer className="border-t pt-6 text-xs text-black/55" style={{ borderColor: THEME.line }}>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <p>© {new Date().getFullYear()} Senter for Midlertidige Løsninger (SML)</p>
+              <p>Utarbeidet i et nøkternt format.</p>
+            </div>
+          </footer>
+        </div>
+      </div>
     </main>
   );
 }
